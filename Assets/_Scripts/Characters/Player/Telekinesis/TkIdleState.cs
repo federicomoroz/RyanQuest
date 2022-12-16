@@ -17,7 +17,7 @@ public class TkIdleState : BaseState
         EventManager.Trigger(EventName.PlayerCanPullObj, false);
         EventManager.Trigger(EventName.PlayerCanShootObj, false);
 
-        _fsm.model.ThrowForceCurrent = 0;
+        _fsm.model.throwForceCurrent = 0;
 
         _fsm.model.VfxWeapon.StopVfx();
         _fsm.model.Animator.SetTrigger("Tk_Off");     
@@ -26,7 +26,7 @@ public class TkIdleState : BaseState
         if (_fsm.model.VfxAura.activeInHierarchy)
             _fsm.model.VfxAura.SetActive(false);
 
-        _fsm.model.ObjectPicked = null;
+        _fsm.model.objectPicked = null;
     }
     public override void OnUpdateState()
     {
@@ -52,13 +52,13 @@ public class TkIdleState : BaseState
 
             if (hit.transform.TryGetComponent(out IPickable pickable))
             {
-                if (_fsm.model.Previous != pickable)
+                if (_fsm.model.previous != pickable)
                 {
-                    if (_fsm.model.Previous != null)
+                    if (_fsm.model.previous != null)
                         RayOut();
 
-                    _fsm.model.Previous = pickable;
-                    _fsm.model.Previous.OutlineOn();
+                    _fsm.model.previous = pickable;
+                    _fsm.model.previous.OutlineOn();
                     EventManager.Trigger(EventName.PlayerCanPickObj, true);
                 }
 
@@ -67,13 +67,13 @@ public class TkIdleState : BaseState
             }
             else
             {
-                if (_fsm.model.Previous != null)
+                if (_fsm.model.previous != null)
                     RayOut();
             }
         }
         else
         {
-            if (_fsm.model.Previous != null)
+            if (_fsm.model.previous != null)
                 RayOut();
         }
 
@@ -82,13 +82,13 @@ public class TkIdleState : BaseState
 
     private void RayOut()
     {
-        _fsm.model.Previous.OutlineOff();
-        _fsm.model.Previous = null;
+        _fsm.model.previous.OutlineOff();
+        _fsm.model.previous = null;
         EventManager.Trigger(EventName.PlayerCanPickObj, false);
     }
     private void PickObject(IPickable pickable)
     {
-        _fsm.model.ObjectPicked = pickable.GetObject();
+        _fsm.model.objectPicked = pickable.GetObject();
         pickable.OutlineOff();
         pickable.Grab(_fsm.model.GrabPoint);
         _fsm.SwitchState(TkState.MOVE);

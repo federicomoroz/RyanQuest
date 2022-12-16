@@ -29,11 +29,11 @@ public class SceneLoader : Singleton<SceneLoader>
 
     private IEnumerator FadeInRoutine(float time)
     {
-        float t = 0;
-        while (t < time)
+        float elapsed = 0;
+        while (elapsed < time)
         {
-            t += Time.deltaTime;
-            blackImage.color = new Color(0, 0, 0, 1 - t);
+            elapsed += Time.deltaTime;
+            blackImage.color = new Color(0, 0, 0, 1 - elapsed);
             yield return null;
         }
         blackImage.gameObject.SetActive(false);
@@ -44,11 +44,11 @@ public class SceneLoader : Singleton<SceneLoader>
     {
         blackImage.gameObject.SetActive(true);
 
-        float t = 0;
-        while (t < time)
+        float elapsed = 0;
+        while (elapsed < time)
         {
-            t += Time.deltaTime;
-            blackImage.color = new Color(0, 0, 0, t);
+            elapsed += Time.deltaTime;
+            blackImage.color = new Color(0, 0, 0, elapsed);
             yield return null;
         }
         fadeRoutine = null;

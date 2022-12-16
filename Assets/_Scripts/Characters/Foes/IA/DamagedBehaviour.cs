@@ -7,7 +7,7 @@ public class DamagedBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if(_model == null)         _model = animator.GetComponent<Foe>();        
-        if(_model.IsVulnerable)    _model.IsVulnerable = false;
+        if(_model.isVulnerable)    _model.isVulnerable = false;
         if (_model.CurrentHp <= 0) _model.OnDeath();
 
         _model.Agent.SetDestination(_model.transform.position);
@@ -25,7 +25,7 @@ public class DamagedBehaviour : StateMachineBehaviour
         _model.Agent.SetDestination(_model.transform.position);
 
         if (_model.IsAlive)        
-            _model.IsVulnerable = true;              
+            _model.isVulnerable = true;              
     }
 
 

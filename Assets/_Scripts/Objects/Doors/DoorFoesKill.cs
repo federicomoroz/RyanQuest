@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DoorFoesKill : Door
 {
-    [SerializeField] private TriggerCollider _triggerCollider;
+    [SerializeField] private ZoneTrigger _triggerCollider;
     [SerializeField] private Foe[]           _foesToKill;
                      private int             _foesAlive;
 

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class AreaDamageCollider : DamagingCollider
 {
-    [SerializeField] private float _colliderLifeTime = 1f;
-    private Collider _collider;
+    [SerializeField] private float    _colliderLifeTime = 1f;
+                     private Collider _collider;
 
     private void Awake()
     {
@@ -17,13 +17,12 @@ public class AreaDamageCollider : DamagingCollider
 
     private void Update()
     {
-        if(_colliderLifeTime > 0)
-        {
-            _colliderLifeTime -= Time.deltaTime;
-        }
-        else
-        {
+        if(_colliderLifeTime > 0)        
+            _colliderLifeTime -= Time.deltaTime;        
+        else        
             _collider.enabled = false;
-        }
+
+        
+        
     }
 }

@@ -15,19 +15,21 @@ public class TelekinesisCTRL
     private float          _pickupMaxDistance;
 
     //Throw Force parameters
-    private float          _throwForceMultiplier = 0.05f;
-    private float          _throwForceMin        = 900f;
-    private float          _throwForceMax        = 1300f;
-    private float          _throwForceCurrent;
+    [HideInInspector] public  float throwForceCurrent;
+                      private float _throwForceMultiplier = 0.05f;
+                      private float _throwForceMin        = 900f;
+                      private float _throwForceMax        = 1300f;    
 
     //Vfx
-    private VFX _vfxWeapon;
-    private GameObject      _vfxAura;
+                      private VFX        _vfxWeapon;
+                      private GameObject _vfxAura;
 
     //Picked obj ref
     
-    private PickableObject _objectPicked;
-    private IPickable      _previous;
+    
+    [HideInInspector] public PickableObject objectPicked;
+    [HideInInspector] public IPickable      previous;
+    
     
 
     [HideInInspector] public Transform      Cam                  { get { return _cam;                  } }
@@ -37,13 +39,10 @@ public class TelekinesisCTRL
     [HideInInspector] public Transform      ThrowPoint           { get { return _throwPoint;           } }
     [HideInInspector] public float          ThrowForceMin        { get { return _throwForceMin;        } }
     [HideInInspector] public float          ThrowForceMax        { get { return _throwForceMax;        } }
-    [HideInInspector] public float          ThrowForceCurrent    { get { return _throwForceCurrent;    } set { _throwForceCurrent = value; } }
     [HideInInspector] public float          ThrowForceMultiplier { get { return _throwForceMultiplier; } }
-    [HideInInspector] public VFX VfxWeapon                       { get { return _vfxWeapon;            } }
+    [HideInInspector] public VFX            VfxWeapon            { get { return _vfxWeapon;            } }
     [HideInInspector] public GameObject     VfxAura              { get { return _vfxAura;              } }
-    [HideInInspector] public PickableObject ObjectPicked         { get { return _objectPicked;         } set { _objectPicked = value;      } }
     [HideInInspector] public LayerMask      PickupLayerMask      { get { return _pickupLayerMask;      } }
-    [HideInInspector] public IPickable      Previous             { get { return _previous;             } set { _previous = value;          } } 
     
 
     public TelekinesisCTRL SetPlayer(Player player)
@@ -134,8 +133,8 @@ public class TelekinesisCTRL
 
     public void DropObject(params object[] parameters)
     {
-        if(_objectPicked != null)
-           _objectPicked.Drop();
+        if(objectPicked != null)
+           objectPicked.Drop();
         _animator.SetTrigger("Tk_Off");
         _fsm.SwitchState(TkState.IDLE); 
   

@@ -10,7 +10,7 @@ public class TkChargeState : BaseState
     }
     public override void OnEnterState()
     {        
-        _fsm.model.ThrowForceCurrent = _fsm.model.ThrowForceMin;
+        _fsm.model.throwForceCurrent = _fsm.model.ThrowForceMin;
         FXManager.Instance.PlaySound(SfxName.PlayerTkCharge);
 
         if (!_fsm.model.VfxAura.activeInHierarchy)
@@ -18,12 +18,12 @@ public class TkChargeState : BaseState
     }
     public override void OnUpdateState()
     {
-        if(_fsm.model.ObjectPicked != null)
+        if(_fsm.model.objectPicked != null)
         {
             if (Input.GetButtonUp("Fire2"))
                 Drop();
 
-            if (!_fsm.model.CheckDistance(_fsm.model.ObjectPicked, _fsm.model.PickupMaxDistance*0.25f))
+            if (!_fsm.model.CheckDistance(_fsm.model.objectPicked, _fsm.model.PickupMaxDistance*0.25f))
                 Drop();      
 
 
@@ -47,13 +47,13 @@ public class TkChargeState : BaseState
     #region Methods
     private void ChargePower()
     {
-        _fsm.model.ThrowForceCurrent = Mathf.Lerp(_fsm.model.ThrowForceCurrent, _fsm.model.ThrowForceMax, _fsm.model.ThrowForceMultiplier);
+        _fsm.model.throwForceCurrent = Mathf.Lerp(_fsm.model.throwForceCurrent, _fsm.model.ThrowForceMax, _fsm.model.ThrowForceMultiplier);
         
     }
 
     private void Throw()
     {
-        if (_fsm.model.ObjectPicked == null)
+        if (_fsm.model.objectPicked == null)
             return; 
 
         Vector3 target;
@@ -63,10 +63,10 @@ public class TkChargeState : BaseState
         else
             target = _fsm.model.Cam.position + _fsm.model.Cam.forward * 50f;
 
-        _fsm.model.ObjectPicked.Throw(target, _fsm.model.ThrowForceCurrent);
+        _fsm.model.objectPicked.Throw(target, _fsm.model.throwForceCurrent);
         _fsm.model.Animator.SetTrigger("Tk_Release");
         FXManager.Instance.PlaySound(SfxName.PlayerTkRelease1);
-        FXManager.Instance.CameraShake(_fsm.model.ObjectPicked.transform.position, 0.5f);
+        FXManager.Instance.CameraShake(_fsm.model.objectPicked.transform.position, 0.5f);
         _fsm.SwitchState(TkState.IDLE);
 
     }

@@ -15,11 +15,11 @@ public class LightFlicker : MonoBehaviour
     private Light _light;
     private Color _originalColor;
     [Header("WAVE PARAMETERS")]
-    [SerializeField] private WaveType _waveFunction = WaveType.Sin;
-    [SerializeField] private float _startValue      = 0.0f; // start
-    [SerializeField] private float _amplitude       = 1.0f; // amplitude of the wave
-    [SerializeField] private float _phase           = 0.0f; // start point inside on wave cycle
-    [SerializeField] private float _frequency       = 0.5f; // cycle frequency per second
+    [SerializeField] private WaveType _waveFunction    = WaveType.Sin;
+    [SerializeField] private float    _startValue      = 0.0f; // start
+    [SerializeField] private float    _amplitude       = 1.0f; // amplitude of the wave
+    [SerializeField] private float    _phase           = 0.0f; // start point inside on wave cycle
+    [SerializeField] private float    _frequency       = 0.5f; // cycle frequency per second
 
 
     private void Awake()

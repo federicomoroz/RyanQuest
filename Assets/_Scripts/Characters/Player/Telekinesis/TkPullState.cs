@@ -24,7 +24,7 @@ public class TkPullState : BaseState
 
         if (_timer > 0.15f)
         {
-            if (_fsm.model.ObjectPicked != null)
+            if (_fsm.model.objectPicked != null)
                 _fsm.SwitchState(TkState.LOADED);
             else
                 _fsm.SwitchState(TkState.IDLE);

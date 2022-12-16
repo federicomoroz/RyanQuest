@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 8048960356805367680}
   - component: {fileID: 4067993132325553060}
   m_Layer: 11
-  m_Name: TriggerCollider
+  m_Name: ZoneTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 649874515393325773}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a5278e7d894a843995b43b8748685c, type: 3}
+  m_Script: {fileID: 11500000, guid: fc7955567e2de9c44a968b654667272b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1664859551571125616

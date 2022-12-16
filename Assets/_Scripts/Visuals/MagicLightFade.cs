@@ -1,38 +1,34 @@
 ﻿using UnityEngine;
-using System.Collections;
- 
+
 namespace MagicArsenal
 {
     public class MagicLightFade : MonoBehaviour
-    {
-        [Header("Seconds to dim the light")]
-        public float life = 0.2f;
-        public bool killAfterLife = true;
- 
-        private Light li;
-        private float initIntensity;
- 
-        // Use this for initialization
-        void Start()
+    {        
+        [SerializeField] private float _lifeTime         = 0.2f;
+        [SerializeField] private bool  _destroyAfterTime = true; 
+                         private Light _light;
+                         private float _initIntensity;
+
+        private void Awake()
         {
-            if (gameObject.GetComponent<Light>())
+            if(_light == null)
             {
-                li = gameObject.GetComponent<Light>();
-                initIntensity = li.intensity;
+                if (this.TryGetComponent(out Light light))
+                    _light = light;
+                else
+                    Debug.Log("No light object found on " + gameObject.name);
             }
-            else
-                print("No light object found on " + gameObject.name);
+
+            _initIntensity = _light.intensity;
+
         }
- 
-        // Update is called once per frame
+
         void Update()
-        {
-            if (gameObject.GetComponent<Light>())
-            {
-                li.intensity -= initIntensity * (Time.deltaTime / life);
-                if (killAfterLife && li.intensity <= 0)
-                    Destroy(gameObject);
-            }
+        {     
+           _light.intensity -= _initIntensity * (Time.deltaTime / _lifeTime);
+
+           if (_destroyAfterTime && _light.intensity <= 0)
+               Destroy(gameObject);
         }
     }
 }

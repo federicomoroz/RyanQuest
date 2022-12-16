@@ -13,24 +13,23 @@ public class PlayerLocomotion
     private LayerMask           _layerMaskWalk;
 
     [Header("Strafe Handling")]
-    private float               _speedMove          =  450f;
-    private float               _speedRot           =  0.8f;
-    private bool                _isMovementPressed;
+    private float               _speedMove              =  450f;
+    private float               _speedRot               =  0.8f;
     private Vector3             _moveVector;
     private Vector2             _leftStickInputValue;
 
 
     [Header("Slope Movement Handling")]
-    private float               _maxSlopeAngle      = 35;
+    private float               _maxSlopeAngle          = 35;
     private RaycastHit          _slopeHit;
 
     [Header("Jump Handling")]
-    private float               _heightJump         =  1.0f;
-    private float               _coyoteJumpTime     =  0.33f;
+    private float               _heightJump             = 1.0f;
+    private float               _coyoteJumpTime         = 0.33f;
     private float?              _lastGroundedTime;
     private float?              _jumpButtonPressedTime;
-    private float               _jumpTimer          = 0f;
-    private bool                _canJump            = true;
+    private float               _jumpTimerElapsed       = 0f;
+    private bool                _canJump                = true;
 
     [Header("Animator hashs")]
     private int                 _moveXanimator;
@@ -43,9 +42,6 @@ public class PlayerLocomotion
     private Vector2             _animationVelocity    = new Vector2(0.75f,0.75f);
 
     public float CurrentSpeed     { get { return _speedMove;         } }
-    public bool IsMovementPressed { get { return _isMovementPressed; } }
-    public bool CanJump           { get { return _canJump;           } }
-    public float CoyoteJumpTime   { get { return _coyoteJumpTime;    } }
     public Rigidbody Rb           { get { return _rb;                } }
     
     #region BUILDER  
@@ -170,11 +166,11 @@ public class PlayerLocomotion
 
         if (!_canJump)
         {
-            _jumpTimer += Time.deltaTime;
-            if (_jumpTimer > 0.35f)
+            _jumpTimerElapsed += Time.deltaTime;
+            if (_jumpTimerElapsed > 0.35f)
             {
                 _canJump = true;
-                _jumpTimer = 0;
+                _jumpTimerElapsed = 0;
             }
         }
     }
@@ -199,7 +195,7 @@ public class PlayerLocomotion
     private void LeftStickInputHandler(Vector2 input)
     {
         _leftStickInputValue = input;
-        if (_player.IsVulnerable)        
+        if (_player.isVulnerable)        
             Movement(input);
         
     }
@@ -247,12 +243,12 @@ public class PlayerLocomotion
             _animator.SetFloat(_moveZanimator, _currentAnimationBlend.y);
 
             //Check if it's moving
-            if (_rb.velocity.magnitude < 0.4 && _player.IsVulnerable)
+            if (_rb.velocity.magnitude < 0.4 && _player.isVulnerable)
                 _animator.SetBool("IsMoving", false);
             else            
                 _animator.SetBool("IsMoving", true);            
         
-       if(_player.IsVulnerable) 
+       if(_player.isVulnerable) 
             RotateToCam();
         
     }   

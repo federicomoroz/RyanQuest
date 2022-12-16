@@ -4,11 +4,11 @@ public class GolemCTRL : FoeAttacker, IFoeDamageable
 {
     
     [Header("Attack Values")]    
-    public float _attackTime  = 1f;
-    //public GameObject _attackCollider;
-    public DamagingCollider _attackCollider;
-    [SerializeField] private SfxName[] _sfxCries;
-    [SerializeField] private Transform _earthSlamPoint;
+
+                     public DamagingCollider _attackCollider;
+    [SerializeField] private SfxName[]       _sfxCries;
+    [SerializeField] private Transform       _earthSlamPoint;
+    [SerializeField] private float           _phaseTwoHpThreshold = 0.5f;
 
     protected override void OnEnable()
     {
@@ -35,7 +35,7 @@ public class GolemCTRL : FoeAttacker, IFoeDamageable
     public override void TakeDamage(int dmg)
     {
         base.TakeDamage(dmg);
-        if(_currentHp/_maxHp < 0.5f)
+        if(_currentHp/_maxHp < _phaseTwoHpThreshold)
         {
             _animator.SetBool("SlamPhase", true);
             print("PHASE 1");
@@ -45,9 +45,10 @@ public class GolemCTRL : FoeAttacker, IFoeDamageable
     public void EarthSlamAttack()
     {
         print("EarthSlam attack");
-        GameObject slam = FXManager.Instance.GetProjectile(ProjectileName.EarthSlam);
+        GameObject slam               = FXManager.Instance.GetProjectile(ProjectileName.EarthSlam);
+        AreaDamageCollider damagingco = slam.gameObject.GetComponent<AreaDamageCollider>();
         Instantiate(slam, _earthSlamPoint.position, Quaternion.Euler(-90,0,0), null);
-        var damagingco = slam.gameObject.GetComponent<DamagingCollider>();
+        print("attack value = " + _attackValue);
         damagingco.SetPower(_attackValue);
         FXManager.Instance.CameraShake(_earthSlamPoint.position, 10f);
         FXManager.Instance.PlaySound(SfxName.ImpactGround, _earthSlamPoint.position);

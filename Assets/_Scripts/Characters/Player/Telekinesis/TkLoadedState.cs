@@ -12,7 +12,7 @@ public class TkLoadedState : BaseState
     {
         Debug.Log("Entering Loaded State");
         EventManager.Trigger(EventName.PlayerCanShootObj, true);
-        if (_fsm.model.ObjectPicked == null)
+        if (_fsm.model.objectPicked == null)
             _fsm.SwitchState(TkState.IDLE);
 
     }
@@ -24,7 +24,7 @@ public class TkLoadedState : BaseState
             Drop();
 
 
-        if (!_fsm.model.CheckDistance(_fsm.model.ObjectPicked, _fsm.model.PickupMaxDistance * 0.25f)) 
+        if (!_fsm.model.CheckDistance(_fsm.model.objectPicked, _fsm.model.PickupMaxDistance * 0.25f)) 
             Drop();
 
         CheckObjectForThrow();

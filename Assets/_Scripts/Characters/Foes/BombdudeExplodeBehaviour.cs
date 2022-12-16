@@ -11,7 +11,7 @@ public class BombdudeExplodeBehaviour : StateMachineBehaviour
         if (_model == null) _model = animator.GetComponent<BombdudeCTRL>();
 
         _model.Agent.SetDestination(_model.transform.position);
-        _model.IsVulnerable = false;
+        _model.isVulnerable = false;
     }
 
 

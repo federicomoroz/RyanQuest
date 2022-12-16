@@ -12,7 +12,7 @@ public class PlayerDamagedBehaviour : StateMachineBehaviour
             _model = animator.GetComponent<Player>();
 
         Debug.Log("Player entered Damaged State");
-        _model.IsVulnerable = false;        
+        _model.isVulnerable = false;        
         FXManager.Instance.PlaySound(_hurtSfxList[GetSfxIndex(_hurtSfxList.Length)]);
     }
 
@@ -29,7 +29,7 @@ public class PlayerDamagedBehaviour : StateMachineBehaviour
             _model.OnDeath();
         else
         {
-            _model.IsVulnerable = true;
+            _model.isVulnerable = true;
             _model.Locomotion.SetMoveSpeed(450);
         }
     }

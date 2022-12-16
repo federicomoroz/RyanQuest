@@ -19,7 +19,7 @@ public class TkMoveState : BaseState
     {
         CheckObjectForPull();
 
-        if (!_fsm.model.CheckDistance(_fsm.model.ObjectPicked, _fsm.model.PickupMaxDistance))        
+        if (!_fsm.model.CheckDistance(_fsm.model.objectPicked, _fsm.model.PickupMaxDistance))        
             Drop();
 
         if (Input.GetButtonUp("Fire2"))
@@ -34,10 +34,10 @@ public class TkMoveState : BaseState
 
     private void CheckObjectForPull()
     {
-        if (_fsm.model.IsVisible(_fsm.model.Cam.GetComponent<Camera>(), _fsm.model.ObjectPicked.transform)
-              && !_fsm.model.IsObstructed(_fsm.model.ObjectPicked.transform.position, _fsm.model.ThrowPoint.position))
+        if (_fsm.model.IsVisible(_fsm.model.Cam.GetComponent<Camera>(), _fsm.model.objectPicked.transform)
+              && !_fsm.model.IsObstructed(_fsm.model.objectPicked.transform.position, _fsm.model.ThrowPoint.position))
         {
-            if (_fsm.model.ObjectPicked.TryGetComponent(out IPushable pickable) && pickable.IsThrowable())
+            if (_fsm.model.objectPicked.TryGetComponent(out IPushable pickable) && pickable.IsThrowable())
             {
                 EventManager.Trigger(EventName.PlayerCanPullObj, true);
 

@@ -14,12 +14,7 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        ProcessCollision(other);
-    }
-
-    private void ProcessCollision(Collider other)
-    {
-        if (other.TryGetComponent<IWarpable>(out IWarpable obj) && obj != null)
+        if (other.TryGetComponent(out IWarpable warpable))
             EventManager.Trigger(EventName.PlayerCheckpoint, _wrap);
     }
 

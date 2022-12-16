@@ -125,10 +125,6 @@ public class Player : Entity, IWarpable, ICurable, IPlayerDamageable, IBlastable
             _telekinesis.VirtualUpdate();     
         }
 
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            EventManager.Trigger(EventName.PlayerDeath, true);
-        }
     }
 
     private void FixedUpdate()
@@ -176,10 +172,9 @@ public class Player : Entity, IWarpable, ICurable, IPlayerDamageable, IBlastable
 
     public override void TakeDamage(int dmg)
     {
-        if (IsVulnerable)
-        {
+        if (isVulnerable)        
             _collisions.HandleDamage(dmg);            
-        }
+        
 
     }
 
@@ -191,9 +186,9 @@ public class Player : Entity, IWarpable, ICurable, IPlayerDamageable, IBlastable
         EventManager.Trigger(EventName.PlayerHpUpdate, _currentHp / _maxHp);
     }
 
-    public bool Vulnerable()
+    public bool IsVulnerable()
     {
-        return IsVulnerable;
+        return isVulnerable;
     }
 
     private void OnPlayerCheckpoint(params object[] parameters)
@@ -220,7 +215,7 @@ public class Player : Entity, IWarpable, ICurable, IPlayerDamageable, IBlastable
         _rb.isKinematic = true;
         _rb.Warp(position, rotation);
         _rb.isKinematic = false;
-        IsVulnerable    = true;
+        isVulnerable    = true;
         EventManager.Trigger(EventName.PlayerHpUpdate, _currentHp / _maxHp);
     }
     private void SetupCamera()
@@ -240,15 +235,4 @@ public class Player : Entity, IWarpable, ICurable, IPlayerDamageable, IBlastable
     }
 
     #endregion
-}
-
-public interface IPlayerDamageable 
-{
-    public void TakeDamage(int dmg);
-    public bool Vulnerable();
-
-    public void Knockback(Vector3 otherPosition, float force);
-    public Rigidbody GetRigidbody();
-
-    
 }

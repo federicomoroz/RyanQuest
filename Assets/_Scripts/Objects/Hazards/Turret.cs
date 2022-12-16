@@ -58,7 +58,7 @@ public class Turret : MonoBehaviour
         
         //Impact Vfx
         _laserImpactVfx.transform.position = laserHit;
-        Vector3 dir = _shootPoint.position - laserHit;
+        Vector3 dir                        = _shootPoint.position - laserHit;
         _laserImpactVfx.transform.rotation = Quaternion.LookRotation(dir);
         
         _laserImpactVfx.Play();
@@ -94,7 +94,7 @@ public class Turret : MonoBehaviour
             {
                 if(hit.transform.TryGetComponent(out IPlayerDamageable player))
                 {
-                    if (player.Vulnerable())
+                    if (player.IsVulnerable())
                     {
                         print("player reached");                        
                         player.TakeDamage(3);

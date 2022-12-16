@@ -1,30 +1,21 @@
 ﻿using UnityEngine;
-using System.Collections;
  
 namespace MagicArsenal
 {
     public class MagicRotation : MonoBehaviour
     {
+        public enum spaceEnum { Local, World };
  
         [Header("Rotate axises by degrees per second")]
-        public Vector3 rotateVector = Vector3.zero;
- 
-        public enum spaceEnum { Local, World };
-        public spaceEnum rotateSpace;
- 
-        // Use this for initialization
-        void Start()
-        {
- 
-        }
- 
-        // Update is called once per frame
+        [SerializeField] private Vector3 _rotateVector = Vector3.zero; 
+        [SerializeField] private spaceEnum _rotateSpace; 
+   
         void Update()
         {
-            if (rotateSpace == spaceEnum.Local)
-                transform.Rotate(rotateVector * Time.deltaTime);
-            if (rotateSpace == spaceEnum.World)
-                transform.Rotate(rotateVector * Time.deltaTime, Space.World);
+            if (_rotateSpace == spaceEnum.Local)
+                transform.Rotate(_rotateVector * Time.deltaTime);
+            else
+                transform.Rotate(_rotateVector * Time.deltaTime, Space.World);
         }
     }
 }

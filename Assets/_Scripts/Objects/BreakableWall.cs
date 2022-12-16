@@ -3,10 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class BreakableWall : MonoBehaviour, IBlastable
 {
-    private Renderer _renderer;
-    private Collider _collider;
-    [SerializeField] private VfxName _destructionVfx;
-    [SerializeField] private SfxName _destructionAlertSfx;
+                     private Renderer _renderer;
+                     private Collider _collider;
+    [SerializeField] private VfxName  _destructionVfx;
+    [SerializeField] private SfxName  _destructionAlertSfx;
 
     private void Awake()
     {
@@ -19,8 +19,7 @@ public class BreakableWall : MonoBehaviour, IBlastable
         if(_collider == null)
         {
             if (this.TryGetComponent(out Collider collider))
-                _collider = collider;
-            
+                _collider = collider;            
         }
             
     }

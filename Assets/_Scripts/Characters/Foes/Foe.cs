@@ -3,31 +3,26 @@ using UnityEngine.AI;
 using System;
 
 public abstract class Foe : Entity, IBlastable
-{
-  
+{  
                      protected Transform         _target;
                      protected NavMeshAgent      _agent;
     [SerializeField] protected GameObject        _hpBar;
                      protected ItemRandomSpawner _irs;
 
-    [Header("NAVMESH")]
     [Header("COMBAT STATS")]
     [SerializeField] protected int _defenseValue, _attackValue;
 
-    [Header("FX")]
-    [Header("VFX")]
-    public GameObject   _vfxHit;
     [Header("SFX")] 
     [SerializeField] protected SfxName _deathSfx;
-    
-    // Getters&Setters 
-    [HideInInspector] public Transform    Target   { get { return _target;  } }
-    [HideInInspector] public NavMeshAgent Agent    { get { return _agent;   } } 
-    [HideInInspector] public GameObject   HpBar    { get { return _hpBar;   } }
-    [HideInInspector] public ItemRandomSpawner Irs { get { return _irs; } }
-    [HideInInspector] public int GetDefenseValue { get { return _defenseValue; } }
-    [HideInInspector] public int GetAttackValue { get { return _attackValue; } }
 
+    #region Getters
+    [HideInInspector] public Transform         Target          { get { return _target;       } }
+    [HideInInspector] public NavMeshAgent      Agent           { get { return _agent;        } } 
+    [HideInInspector] public GameObject        HpBar           { get { return _hpBar;        } }
+    [HideInInspector] public ItemRandomSpawner Irs             { get { return _irs;          } }
+    [HideInInspector] public int               GetDefenseValue { get { return _defenseValue; } }
+    [HideInInspector] public int               GetAttackValue  { get { return _attackValue;  } }
+    #endregion
 
 
     public Action<float> e_OnHealthUpdate = delegate { };
@@ -71,7 +66,7 @@ public abstract class Foe : Entity, IBlastable
     }
     public override void TakeDamage(int dmg)
     {
-        if(_isAlive && IsVulnerable)
+        if(_isAlive && isVulnerable)
         {
             _animator.SetTrigger("Damaged");
             print($"{gameObject.name} received {dmg} damage");
@@ -138,10 +133,4 @@ public abstract class Foe : Entity, IBlastable
         TakeDamage(explosion.Damage/2);
         _rb.AddExplosionForce(explosion.Force*2, explosion.OriginPosition, explosion.Radius, explosion.ForceUp*2, explosion.Mode);
     }
-}
-
-public interface IFoeDamageable 
-{
-    public void TakeDamage(int dmg);
-    public Rigidbody GetRigidbody();
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MagicArsenal
 {
@@ -9,32 +7,27 @@ public class MagicBeamStatic : MonoBehaviour
 {
 
     [Header("Prefabs")]
-    public GameObject beamLineRendererPrefab; //Put a prefab with a line renderer onto here.
-    public GameObject beamStartPrefab; //This is a prefab that is put at the start of the beam.
-    public GameObject beamEndPrefab; //Prefab put at end of beam.
+    [SerializeField] private GameObject _beamLineRendererPrefab;
+    [SerializeField] private GameObject _beamStartPrefab;
+    [SerializeField] private GameObject _beamEndPrefab; 
 
-    private GameObject beamStart;
-    private GameObject beamEnd;
-    private GameObject beam;
-    private LineRenderer line;
+                     private GameObject   _beamStart;
+                     private GameObject   _beamEnd;
+                     private GameObject   _beam;
+                     private LineRenderer _line;
 
     [Header("Beam Options")]
-    public bool alwaysOn = true; //Enable this to spawn the beam when script is loaded.
-    public bool beamCollides = true; //Beam stops at colliders
-    public float beamLength = 100; //Ingame beam length
-    public float beamEndOffset = 0f; //How far from the raycast hit point the end effect is positioned
-    public float textureScrollSpeed = 0f; //How fast the texture scrolls along the beam, can be negative or positive.
-    public float textureLengthScale = 1f;   //Set this to the horizontal length of your texture relative to the vertical. 
+    [SerializeField] private bool  _alwaysOn           = true; //Enable this to spawn the beam when script is loaded.
+    [SerializeField] private bool  _beamCollides       = true; //Beam stops at colliders
+    [SerializeField] private float _beamLength         = 100; //Ingame beam length
+    [SerializeField] private float _beamEndOffset      = 0f; //How far from the raycast hit point the end effect is positioned
+    [SerializeField] private float _textureScrollSpeed = 0f; //How fast the texture scrolls along the beam, can be negative or positive.
+    [SerializeField] private float _textureLengthScale = 1f;   //Set this to the horizontal length of your texture relative to the vertical. 
                                             //Example: if texture is 200 pixels in height and 600 in length, set this to 3
-
-    void Start()
-    {
-        
-    }
 
     private void OnEnable()
     {
-        if (alwaysOn) //When the object this script is attached to is enabled, spawn the beam.
+        if (_alwaysOn) //When the object this script is attached to is enabled, spawn the beam.
             SpawnBeam();
     }
 
@@ -45,55 +38,52 @@ public class MagicBeamStatic : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (beam) //Updates the beam
+        if (_beam) //Updates the beam
         {
-            line.SetPosition(0, transform.position);
+            _line.SetPosition(0, transform.position);
 
             Vector3 end;
             RaycastHit hit;
-            if (beamCollides && Physics.Raycast(transform.position, transform.forward, out hit)) //Checks for collision
-                end = hit.point - (transform.forward * beamEndOffset);
+            if (_beamCollides && Physics.Raycast(transform.position, transform.forward, out hit)) //Checks for collision
+                end = hit.point - (transform.forward * _beamEndOffset);
             else
-                end = transform.position + (transform.forward * beamLength);
+                end = transform.position + (transform.forward * _beamLength);
 
-            line.SetPosition(1, end);
+            _line.SetPosition(1, end);
 
-            if (beamStart)
+            if (_beamStart)
             {
-                beamStart.transform.position = transform.position;
-                beamStart.transform.LookAt(end);
+                _beamStart.transform.position = transform.position;
+                _beamStart.transform.LookAt(end);
             }
-            if (beamEnd)
+            if (_beamEnd)
             {
-                beamEnd.transform.position = end;
-                beamEnd.transform.LookAt(beamStart.transform.position);
+                _beamEnd.transform.position = end;
+                _beamEnd.transform.LookAt(_beamStart.transform.position);
             }
 
             float distance = Vector3.Distance(transform.position, end);
-            line.material.mainTextureScale = new Vector2(distance / textureLengthScale, 1); //This sets the scale of the texture so it doesn't look stretched
-            line.material.mainTextureOffset -= new Vector2(Time.deltaTime * textureScrollSpeed, 0); //This scrolls the texture along the beam if not set to 0
+            _line.material.mainTextureScale = new Vector2(distance / _textureLengthScale, 1); //This sets the scale of the texture so it doesn't look stretched
+            _line.material.mainTextureOffset -= new Vector2(Time.deltaTime * _textureScrollSpeed, 0); //This scrolls the texture along the beam if not set to 0
         }
     }
 
     public void SpawnBeam() //This function spawns the prefab with linerenderer
     {
-        if (beamLineRendererPrefab)
+        if (_beamLineRendererPrefab)
         {
-            if (beamStartPrefab)
-                beamStart = Instantiate(beamStartPrefab);
-            if (beamEndPrefab)
-                beamEnd = Instantiate(beamEndPrefab);
-            beam = Instantiate(beamLineRendererPrefab);
-            beam.transform.position = transform.position;
-            beam.transform.parent = transform;
-            beam.transform.rotation = transform.rotation;
-            line = beam.GetComponent<LineRenderer>();
-            line.useWorldSpace = true;
-            #if UNITY_5_5_OR_NEWER
-			line.positionCount = 2;
-			#else
-			line.SetVertexCount(2); 
-			#endif
+            if (_beamStartPrefab)
+                _beamStart = Instantiate(_beamStartPrefab);
+            if (_beamEndPrefab)
+                _beamEnd = Instantiate(_beamEndPrefab);
+            _beam = Instantiate(_beamLineRendererPrefab);
+            _beam.transform.position = transform.position;
+            _beam.transform.parent = transform;
+            _beam.transform.rotation = transform.rotation;
+            _line = _beam.GetComponent<LineRenderer>();
+            _line.useWorldSpace = true;
+			_line.positionCount = 2;
+		
         }
         else
             print("Add a prefab with a line renderer to the MagicBeamStatic script on " + gameObject.name + "!");
@@ -101,12 +91,12 @@ public class MagicBeamStatic : MonoBehaviour
 
     public void RemoveBeam() //This function removes the prefab with linerenderer
     {
-        if (beam)
-            Destroy(beam);
-        if (beamStart)
-            Destroy(beamStart);
-        if (beamEnd)
-            Destroy(beamEnd);
+        if (_beam)
+            Destroy(_beam);
+        if (_beamStart)
+            Destroy(_beamStart);
+        if (_beamEnd)
+            Destroy(_beamEnd);
     }
 }
 }

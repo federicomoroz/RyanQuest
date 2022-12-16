@@ -3,7 +3,7 @@ using UnityEngine;
 public class VFX : MonoBehaviour
 {
     private ParticleSystem _ps;
-    private AudioSource _as;
+    private AudioSource    _as;
 
     private void Awake()
     {

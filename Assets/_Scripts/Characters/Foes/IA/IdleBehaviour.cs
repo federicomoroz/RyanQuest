@@ -9,7 +9,7 @@ public class IdleBehaviour : StateMachineBehaviour
     {
         if(_model == null) _model = animator.GetComponent<FoeChaser>();
         
-        _model.IsVulnerable       = true;
+        _model.isVulnerable       = true;
         _timer                    = 0;
     }
 

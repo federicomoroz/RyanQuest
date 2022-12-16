@@ -6,15 +6,14 @@ public abstract class Entity : MonoBehaviour
                      protected Animator  _animator;
 
     [Header("HEALTH VALUES")]
-    [SerializeField] protected float  _maxHp;
-                     protected float  _currentHp    = 0;
-                     protected bool   _isAlive      = true;   
-                     protected bool   _isVulnerable = true; 
+    [HideInInspector] public    bool   isVulnerable = true;
+    [SerializeField]  protected float  _maxHp;
+                      protected float  _currentHp   = 0;
+                      protected bool   _isAlive     = true;                        
 
    [HideInInspector] public float  MaxHp        { get { return _maxHp;        } }
    [HideInInspector] public float  CurrentHp    { get { return _currentHp;    } }
-   [HideInInspector] public bool IsAlive        { get { return _isAlive;      } set { _isAlive      = value; } }                     
-   [HideInInspector] public bool IsVulnerable   { get { return _isVulnerable; } set { _isVulnerable = value; } }
+   [HideInInspector] public bool   IsAlive      { get { return _isAlive;      } }                
 
     public abstract void TakeDamage(int dmg); 
     public abstract void Cure(int hp);

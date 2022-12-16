@@ -4,26 +4,30 @@ using UnityEngine.Video;
 
 public class FXManager : Singleton<FXManager>
 {
+    #region Components
     private AudioSource _asMusic;
     private ImpulseCTRL _impulseController;
+    #endregion
 
+    #region Parameters
     [SerializeField] private float _musicFadeTime = 1f;
+    #endregion
 
     protected override void Awake()
     {
         base.Awake();
 
-        if (_asMusic == null)
-        {
-            if (this.TryGetComponent(out AudioSource source))
-                _asMusic = source;
-        }
         if (_impulseController == null)
         {
             if (this.transform.GetChild(0).TryGetComponent(out ImpulseCTRL impulse))
                 _impulseController = impulse;
         }
 
+        if (_asMusic == null)
+        {
+            if (this.transform.GetChild(1).TryGetComponent(out AudioSource source))
+                _asMusic = source;
+        }
     }
 
     public void PlayMusic(MusicName music, bool isLoop)
@@ -95,7 +99,7 @@ public class FXManager : Singleton<FXManager>
         sfxGameObj.transform.position     = position;
         AudioSource audioSource           = sfxGameObj.AddComponent<AudioSource>();
         GameAssets.SfxClip sfxClip        = GetSfxClip(sound);
-        sfxGameObj.name = "Sfx " + sfxClip.name;
+        sfxGameObj.name                   = "Sfx " + sfxClip.name;
         audioSource.outputAudioMixerGroup = sfxClip.mixerGroup;
         audioSource.clip = sfxClip.audioClip;
         audioSource.Play();
@@ -105,12 +109,12 @@ public class FXManager : Singleton<FXManager>
     
     public void PlaySound(SfxName sound)
     {
-        GameObject sfxGameObj = new GameObject("Sfx");
-        AudioSource audioSource = sfxGameObj.AddComponent<AudioSource>();
-        GameAssets.SfxClip sfxClip = GetSfxClip(sound);
-        sfxGameObj.name = "Sfx " + sfxClip.name;
+        GameObject sfxGameObj             = new GameObject("Sfx");
+        AudioSource audioSource           = sfxGameObj.AddComponent<AudioSource>();
+        GameAssets.SfxClip sfxClip        = GetSfxClip(sound);
+        sfxGameObj.name                   = "Sfx " + sfxClip.name;
         audioSource.outputAudioMixerGroup = sfxClip.mixerGroup;
-        audioSource.clip = sfxClip.audioClip;
+        audioSource.clip                  = sfxClip.audioClip;
         audioSource.Play();
 
         StartCoroutine(DestroyObjCo(sfxGameObj, sfxClip.audioClip.length));
